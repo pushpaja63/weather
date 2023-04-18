@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+
+	</style>
+</head>
+<body>
+	<h1>simple weather checking</h1>
+	<form id="form"> 
+		<input type="text" id="input" placeholder="enter city name" /></br></br>
+		<button>submit</button>
+	</form>
+		<p id="cities"></p>
+
+
+	<script type="text/javascript">
+	
+			const form=document.getElementById("form")
+			const info=document.getElementById("cities")
+			const input=document.getElementById("input")
+			const apikey="faff1d819ab97c6014e2065f7a9af48e"
+			form.addEventListener("submit",e=>{
+				e.preventDefault();
+				info.textContent=""
+				const p=input.value;
+				const url=`https://api.openweathermap.org/data/2.5/weather?q=${p}&appid=${apikey}&units=metric`;
+				fetch(url)
+				.then(response=>response.json())
+				.then(data=>{
+					const {main,name,sys}=data
+					const para=document.createElement("p")
+					para.classList.add("city")
+					const out=`<p>city:${name}</p>
+							   <div>temperature is:${Math.round(main.temp)}<sup>0</sup>C</div>`
+							   para.innerHTML=out
+							   info.appendChild(para)
+				})
+				.catch(()=>{
+					alert("please enter city name")
+				})
+				form.reset();
+			})
+
+		
+	</script>
+</body>
+</html>
